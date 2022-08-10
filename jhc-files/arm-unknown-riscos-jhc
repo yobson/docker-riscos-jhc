@@ -1,0 +1,3 @@
+#!/bin/sh
+
+jhc-exec -mriscos -L /opt/jhc $@

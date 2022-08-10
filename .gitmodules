@@ -1,0 +1,3 @@
+[submodule "jhc-components"]
+	path = jhc-components
+	url = ../jhc-components

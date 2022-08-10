@@ -2,8 +2,10 @@ all:	build
 
 GCC_REV=$(shell svn info --show-item revision gcc4 | sed -e 's/ //g')
 CONTAINER_TAG=r$(GCC_REV)
-CONTAINER_NAME=akuneko/riscos-gccsdk
-NUMPROC?=4
+CONTAINER_NAME=yobson/riscos-gccsdk-jhc
+MAKE_PID := $(shell echo $$PPID)
+JOB_FLAG := $(filter -j%, $(subst -j ,-j,$(shell ps T | grep "^\s*$(MAKE_PID).*$(MAKE)")))
+NUMPROC  := $(subst -j,,$(JOB_FLAG))
 
 export NUMPROC
 
@@ -16,7 +18,3 @@ gcc4:
 .PHONY:	update-all
 update-all:	gcc4
 	cd gcc4 && svn up
-
-push:	build
-	docker push ${CONTAINER_NAME}:${CONTAINER_TAG} 
-	docker push ${CONTAINER_NAME}:latest
